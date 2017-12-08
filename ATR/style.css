@@ -1,0 +1,103 @@
+body{
+	background-image: url("img/office.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin: 0 auto;
+}
+.change a{
+	color: mediumseagreen;
+	font-weight: bold;
+}
+#frm{
+
+	width: 400px;
+	height: 250px;
+	border-radius: 4px;
+	margin: 0 auto;
+	margin-top: 150px;
+	background: rgba(0,0,0,.5);
+	padding: 50px;
+	color: white;
+}
+#frm p{
+	text-align: center;
+}
+#frm img{
+	width: 120px;
+	height: 120px;
+	border-radius: 60%;
+	margin-top: -150px;
+	margin-bottom:  20px;
+	margin-left: 20%;
+}
+#btn{
+
+	color: white;
+	background: mediumseagreen;
+	padding: 5px;
+	text-align: center;
+}
+nav{
+	background: #220;
+	width: 100%;
+	margin: 0;
+	opacity: 0.6;
+	float: left;
+}
+nav ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+nav ul li{
+	display: inline-block;
+	padding: 20px;
+	cursor: pointer;
+}
+nav ul li a{
+	text-decoration: none;
+	color: #fff;
+	display: block;
+}
+nav ul li:hover{
+	background: mediumseagreen;
+
+}
+nav ul ul{
+	position: absolute;
+	width: 200px;
+	background: #220;
+	margin-top: 20px;
+	margin-left: -20px;
+	text-align: left;
+	display: none;
+}
+nav ul ul li{
+	display: block;
+}
+nav ul li:hover > ul{
+	display: block;
+}
+#content: {
+	width:50%;
+	margin: 20px auto;
+	border: 1px solid #cbcbcb;
+}
+form{
+	width: 50%;
+	margin: 20px auto;
+}
+form div{
+	margin-top: 5px;
+}
+#img_div{
+	width: 80%;
+	padding: 5px;
+	margin: 15px auto;
+	border: 1px solid #cbcbcb;
+}
+#img_div:after;{
+	content: "";
+	display: block;
+	clear: both;
+}
