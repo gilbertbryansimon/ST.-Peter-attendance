@@ -62,18 +62,22 @@ if(isset($_POST['timein'])){
 
     $add_staff_query_timein = mysqli_query($connection,"SELECT timein From add_staff where ID='$id'");
     if (mysqli_num_rows($add_staff_query_timein) == 0) {
-        echo "<script>alert('Staff ID does NOT exist!'); window.location='staff.php'</script>";
+        alert("Staff ID does NOT exist!");
+        alert(mysqli_num_rows($add_staff_query_timein));
     } else {
         $staff_tb_query = mysqli_query($connection,"SELECT * From staff_tb where ID='$id' and Date='$date'");
+        alert($time);
+        alert(strtotime($add_staff_query_timein)));
+        alert($add_staff_query_timein);
         if (mysqli_num_rows($staff_tb_query) == 0) {
             $queryin = mysqli_query($connection,"INSERT INTO staff_tb(ID,Position,Firstname,Lastname,TimeIn,Date) VALUES ((Select id from add_staff Where id = $id),(Select position from add_staff where id = $id), (select fname from add_staff where id = $id), (select lname from add_staff where id = $id), '$time', '$date')");
             if (strtotime($time) <= strtotime($add_staff_query_timein)) {
-                echo "<script>alert('Time In Successful'); window.location='staff.php'</script>";
+                alert("Time In Successful");
             } else {
-                echo "<script>alert('You are late'); window.location='staff.php'</script>";
+                alert("You are late");
             }
         } else {
-            echo "<script>alert('User already Time In'); window.location='staff.php'</script>";
+            alert("User already Time In");
         }
     }
 }
@@ -87,17 +91,22 @@ $staff_tb_query = mysqli_query($connection,"SELECT * From staff_tb where ID='$id
     $add_staff_query_timeout = mysqli_query($connection,"SELECT timeout From add_staff where ID='$id'");
 
     if (mysqli_num_rows($add_staff_query_timeout) == 0) {
-        echo "<script>alert('Staff ID does NOT exist!'); window.location='staff.php'</script>";
+        alert("Staff ID does NOT exist!")
     } elseif (mysqli_num_rows($staff_tb_query) == 0) {
-        echo "<script>alert('You need to time in first!'); window.location='staff.php'</script>";
+        alert("You need to time in first!"
     } elseif (mysqli_num_rows($staff_tb_query) and strtotime($time) < strtotime($add_staff_query_timeout)) {
-        echo "<script>alert('It's not your time yet.); window.location='staff.php'</script>";
+        alert("It's not your time yet.")
     } else {
         $queryin = mysqli_query($connection,"UPDATE staff_tb set TimeOut='$time' where ID = '$id' AND Date='$date'");
-        echo "<script>alert('Time Out Successful'); window.location='staff.php'</script>";
+        alert("Time Out Successful")
         
     header("Location:staff.php");
     }
 }
+
+function alert($message) {
+    echo "<script>alert('$message'); window.location='staff.php'</script>";
+}
+
 mysqli_close($connection);
 ?>
