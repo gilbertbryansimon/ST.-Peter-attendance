@@ -61,14 +61,15 @@ if(isset($_POST['timein'])){
     $date = $_POST['date'];
 
     $add_staff_query_timein = mysqli_query($connection,"SELECT timein From add_staff where ID='$id'");
-    $time_in_sec = strtotime($add_staff_query_timein);
+    // $time_in_sec = strtotime($add_staff_query_timein);
+    $time_in_sec = time_string_to_seconds($add_staff_query_timein);
     if (mysqli_num_rows($add_staff_query_timein) == 0) {
         alert("Staff ID does NOT exist!");
     } else {
         $staff_tb_query = mysqli_query($connection,"SELECT * From staff_tb where ID='$id' and Date='$date'");
         if (mysqli_num_rows($staff_tb_query) == 0) {
             $queryin = mysqli_query($connection,"INSERT INTO staff_tb(ID,Position,Firstname,Lastname,TimeIn,Date) VALUES ((Select id from add_staff Where id = $id),(Select position from add_staff where id = $id), (select fname from add_staff where id = $id), (select lname from add_staff where id = $id), '$time', '$date')");
-            if (strtotime($time) < strtotime($add_staff_query_timein)) {
+            if (time_string_to_seconds($time) < time_string_to_seconds($add_staff_query_timein)) {
                 alert("Time In Successful $time_in_sec");
             } else {
                 alert("You are late $time_in_sec");
@@ -104,12 +105,18 @@ $staff_tb_query = mysqli_query($connection,"SELECT * From staff_tb where ID='$id
 function alert($message) {
     echo "<script>alert('$message'); window.location='staff.php'</script>";
 }
-function string_time_to_sec() {
-  $hms = "02:04:33";
-$a = call_method($hms, "split", ":");
-$seconds = _plus(to_number(get($a, 0.0)) * 60.0 * 60.0, to_number(get($a, 1.0)) * 60.0, to_number(get($a, 2.0)));
-call_method($console, "log", $seconds);
 
+//kelangan natin gumawa ng function na pag pinasa ang string hours na "HH:MM:SS" ay magiging seconds
+// dagdag tayo ng parameter sa function
+// mas maganda yung pagkakasabi mo kanina sa chat eh
+function time_string_to_seconds($time_in_HHMMSS) {
+    // konting galang naman sa language
+    // parang nag sasalita ka ng tunog chinese kahit pilipino ang mga salita na binabanggit mo
+    // $a = call_method($hms, "split", ":");
+    $hms = explode(":", $time_in_HHMMSS);
+    // $seconds = _plus(to_number(get($a, 0.0)) * 60.0 * 60.0, to_number(get($a, 1.0)) * 60.0, to_number(get($a, 2.0)));
+    // call_method($console, "log", $seconds);
+    return (int)$hms[0] * 3600 + (int)$hms[1] * 60 + (int)$hms[2];
 }
 
 mysqli_close($connection);
