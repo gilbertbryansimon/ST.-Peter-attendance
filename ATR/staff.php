@@ -61,19 +61,20 @@ if(isset($_POST['timein'])){
     $date = $_POST['date'];
 
     $add_staff_query_timein = mysqli_query($connection,"SELECT timein From add_staff where ID='$id'");
+    $time_in_sec = strtotime($add_staff_query_timein);
     if (mysqli_num_rows($add_staff_query_timein) == 0) {
         alert("Staff ID does NOT exist!");
     } else {
         $staff_tb_query = mysqli_query($connection,"SELECT * From staff_tb where ID='$id' and Date='$date'");
         if (mysqli_num_rows($staff_tb_query) == 0) {
             $queryin = mysqli_query($connection,"INSERT INTO staff_tb(ID,Position,Firstname,Lastname,TimeIn,Date) VALUES ((Select id from add_staff Where id = $id),(Select position from add_staff where id = $id), (select fname from add_staff where id = $id), (select lname from add_staff where id = $id), '$time', '$date')");
-            if (strtotime($time) <= strtotime($add_staff_query_timein)) {
-                alert("Time In Successful $time,strtotime($add_staff_query_timein),$add_staff_query_timein");
+            if (strtotime($time) < strtotime($add_staff_query_timein)) {
+                alert("Time In Successful $time_in_sec");
             } else {
-                alert("You are late $time,strtotime($add_staff_query_timein),$add_staff_query_timein");
+                alert("You are late $time_in_sec");
             }
         } else {
-            alert("User already Time In $time,strtotime($add_staff_query_timein),$add_staff_query_timein");
+            alert("User already Time In $time_in_sec");
         }
     }
 }
@@ -102,6 +103,13 @@ $staff_tb_query = mysqli_query($connection,"SELECT * From staff_tb where ID='$id
 
 function alert($message) {
     echo "<script>alert('$message'); window.location='staff.php'</script>";
+}
+function string_time_to_sec() {
+  $hms = "02:04:33";
+$a = call_method($hms, "split", ":");
+$seconds = _plus(to_number(get($a, 0.0)) * 60.0 * 60.0, to_number(get($a, 1.0)) * 60.0, to_number(get($a, 2.0)));
+call_method($console, "log", $seconds);
+
 }
 
 mysqli_close($connection);
