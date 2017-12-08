@@ -51,27 +51,31 @@ function checkTime(i) {
 $connection = mysqli_connect("localhost", "root", ""); 
 $db = mysqli_select_db($connection,"staff");  
 
+// cases for user sign in:
+//      true for first timein before or after expected time
+//      false is not first time and user not exist
+
 if(isset($_POST['timein'])){ 
     $id = $_POST['id'];
     $time = $_POST['time'];
     $date = $_POST['date'];
 
-    $staff_tb_query = mysqli_query($connection,"SELECT * From staff_tb where ID='$id' and Date='$date'");
     $add_staff_query_timein = mysqli_query($connection,"SELECT timein From add_staff where ID='$id'");
-
     if (mysqli_num_rows($add_staff_query_timein) == 0) {
         echo "<script>alert('Staff ID does NOT exist!'); window.location='staff.php'</script>";
-    } elseif (strtotime($time) < strtotime($add_staff_query_timein)) {
-      $queryin = mysqli_query($connection,"INSERT INTO staff_tb(ID,Position,Firstname,Lastname,TimeIn,Date) VALUES ((Select id from add_staff Where id = $id),(Select position from add_staff where id = $id), (select fname from add_staff where id = $id), (select lname from add_staff where id = $id), '$time', '$date')");
-      echo "<script>alert('Time In Successful'); window.location='staff.php'</script>";
-      header("Location:staff.php");
-    } elseif (mysqli_num_rows($staff_tb_query) > 0) {
-        echo "<script>alert('User already Time In'); window.location='staff.php'</script>";
-    } elseif (strtotime($time) > strtotime($add_staff_query_timein)) { 
-        $queryin = mysqli_query($connection,"INSERT INTO staff_tb(ID,Position,Firstname,Lastname,TimeIn,Date) VALUES ((Select id from add_staff Where id = $id),(Select position from add_staff where id = $id), (select fname from add_staff where id = $id), (select lname from add_staff where id = $id), '$time', '$date')");
-        echo "<script>alert('You are late'); window.location='staff.php'</script>";
-
-    } 
+    } else {
+        $staff_tb_query = mysqli_query($connection,"SELECT * From staff_tb where ID='$id' and Date='$date'");
+        if (mysqli_num_rows($staff_tb_query) == 0) {
+            $queryin = mysqli_query($connection,"INSERT INTO staff_tb(ID,Position,Firstname,Lastname,TimeIn,Date) VALUES ((Select id from add_staff Where id = $id),(Select position from add_staff where id = $id), (select fname from add_staff where id = $id), (select lname from add_staff where id = $id), '$time', '$date')");
+            if (strtotime($time) <= strtotime($add_staff_query_timein)) {
+                echo "<script>alert('Time In Successful'); window.location='staff.php'</script>";
+            } else {
+                echo "<script>alert('You are late'); window.location='staff.php'</script>";
+            }
+        } else {
+            echo "<script>alert('User already Time In'); window.location='staff.php'</script>";
+        }
+    }
 }
 
 
