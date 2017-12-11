@@ -12,14 +12,9 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" type="text/css" href="fonts/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <script>
 function printContent(printableArea) {
      var printContents = document.getElementById(printableArea).innerHTML;
@@ -84,6 +79,7 @@ i {
       <li><a href="Admin.php"><i class="fa fa-user"> My Admin</i></a></li></li>
       <li><a href="staff_records.php"><i class="fa fa-table"> Attendance Records</i></a></li>
       <li><a href="addstaff.php"><i class="fa fa-user-plus"> Add Employee</i></a></li>
+      <li style="float:right;"><button onclick="printContent('printableArea')"><i class="fa fa-print" style="color:gray;"></i> </button> </li>
       <li style="float:right;"><i class="fa fa-search"></i> <input  id="myInput" type="text" placeholder="Search.."></li>
    </ul>
 </nav><br><br><br><br><br><br>
@@ -119,19 +115,14 @@ i {
           <td data-target="timeout"><?php echo $row['timeout'];?></td>
           <td data-target="position"><?php echo $row['position'];?></td>
           <td>
-            <button type="button" data-target="#myModal" data-role="view" data-id="<?php echo $row['id'];?>"><i style="color:black" class="fa fa-eye"></i> </button>
+            <button type="button"  data-role="view" data-target="#myModal" data-id="<?php echo $row['id'];?>"><i style="color:black" class="fa fa-eye"></i> </button>
             <button type="submit" name="myDelete" value="<?php echo $row['id']; ?>"><i style="color:black" class="fa fa-trash"></i> </button>
           </td> 
         </tr>
         <?php endwhile;?>
     </tbody>
   </table></div></center></div></form> 
-   <center>
-   <p>
-        <button onclick="printContent('printableArea')">Print this page</button>
-   </p>     
-  </center>
-
+   
    <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
@@ -197,7 +188,6 @@ $(document).ready(function(){
 
 <!--for view-->
 <script>
-
 $(document).ready(function(){
   $(document).on('click','button[data-role=view]',function(){
     var id =  $(this).data('id');
@@ -218,6 +208,7 @@ $(document).ready(function(){
 
   });
 });
+</script>
 </html>
 <?php
 if(isset($_GET['myDelete'])) {

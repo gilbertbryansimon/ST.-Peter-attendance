@@ -1,6 +1,15 @@
 <?php 
 include('header2.php');?>
 
+<?php
+$con = mysqli_connect("localhost", "root", "","staff");
+
+$count=mysqli_query($con,"INSERT INTO performance(Rate) VALUES (SELECT Status,count(*) from staff_tb where Status ='Present' Group by Status) where Status='Present'");
+$query=mysqli_query($con,"SELECT * from performance");
+$res=$query;
+
+?>
+
 <br><br><br>
 <center><script type="text/javascript" src="gstatic/loader.js"></script>
        <div id="piechart" style="width: 500px; height: 400px;"></div>
@@ -12,14 +21,24 @@ include('header2.php');?>
       function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Late',     5],
-          ['Present',      10],
-          ['absent',  2],
+          ['Status', 'Rate'],
+
+          <?php 
+          while ($row=$res->fetch_assoc()) 
+          {
+            echo "['".$row['Status']."',".$row['Rate']."],";
+          }
+
+          ?>
+          
         ]);
 
         var options = {
           title: "Employee's Daily Attendance Performance",
+          is3D:true,
+          colors: ['green','blue','orange'],
+          'backgroundColor': 'mediumseagreen',
+
           
         };
 

@@ -11,6 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" type="text/css" href="fonts/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script>
 function printContent(printableArea) {
      var printContents = document.getElementById(printableArea).innerHTML;
@@ -55,6 +56,12 @@ i {
 label{
   color: white;
 }
+h4 {
+  background-color: #5cb85c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+}
 </style>
   <title>Staff's Attendance Record</title>
   <link rel="icon" type="icon" href="img/images3.jpg">
@@ -65,10 +72,11 @@ label{
       <li><a href="Admin.php"><i class="fa fa-user"> My Admin</i></a></li>
       <li><a href="allstaff.php"><i class="fa fa-table"> My Employee</i></a></li>
       <li><a href="addstaff.php"><i class="fa fa-user-plus"> Add Employee</i></a></li>
-      <li style="float:right;"><i class="fa fa-search"></i> <input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+      <li style="float:right;"><button onclick="printContent('printableArea')"><i class="fa fa-print" style="color:gray;"></i> </button> </li>
+      <li style="float:right;"><i class="fa fa-search"></i> <input id="myInput" type="text" placeholder="Search.."></li>
    </ul>
 </nav><br><br><br><br><br><br>
-<center><form action="eerevuiew.php" method="POST">
+<!-- <center><form action="eerevuiew.php" method="POST">
 <label for="from">From:</label> 
 <input type="date" id="datepicker" name="fromDate"/> 
 <label for="to">to:</label> 
@@ -87,7 +95,7 @@ $sql="SELECT * FROM staff_tb WHERE Date BETWEEN '".$min."' AND '".$max."'";
 $result = mysqli_query($connection,$sql);
 header("Location:staff_records.php");
 }
-?> 
+?>  -->
 <div class="container">  
    
   </table>
@@ -101,6 +109,7 @@ header("Location:staff_records.php");
           <th>Time In</th>
           <th>Time Out</th>
           <th>Date</th>
+          <th>Status</th>
       </tr>
     </thead>
     <tbody id="myTable">
@@ -113,14 +122,12 @@ header("Location:staff_records.php");
           <td><?php echo $row['TimeIn'];?></td>
           <td><?php echo $row['TimeOut'];?></td>
           <td><?php echo $row['Date'];?></td>
+          <td><?php echo $row['Status'];?></td>
         </tr>
         <?php endwhile;?>
     </tbody>
-  </table></div></center></div>-->
-   <center>
-   <p>
-        <button onclick="printContent('printableArea')">Print this page</button>
-    </center>
+  </table></div></center></div>
+   
 
 <script>
 $(document).ready(function(){

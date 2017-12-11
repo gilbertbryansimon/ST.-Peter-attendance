@@ -30,13 +30,13 @@
     <img style = "margin-left: 35%;" src="img/images3.jpg">
      <center><h2 style="text-align:center;">Add Employee</h2>
       <p>
-        <input type="integer" name="id" required placeholder="Enter id code...">
+        <input type="integer" name="id" required autocomplete placeholder="Enter id code...">
       </p>
        <p>
-        <input type="text" name="fname" required  placeholder="First Name...">
+        <input type="text" name="fname" required autocomplete  placeholder="First Name...">
       </p>
       <p>
-        <input type="text" name="lname" required  placeholder="Last Name...">
+        <input type="text" name="lname" required autocomplete  placeholder="Last Name...">
       </p>
        <select name="position" required>
           <option>Choose Position</option>
